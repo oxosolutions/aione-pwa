@@ -24,7 +24,7 @@
  * Text Domain:       aione-pwa
  * Domain Path:       /languages
   * GitHub Plugin URI: https://github.com/oxosolutions/aione-pwa
- * GitHub Branch: master
+ * GitHub Branch: main
  */
 
 // If this file is called directly, abort.
