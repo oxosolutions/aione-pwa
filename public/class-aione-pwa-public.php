@@ -75,7 +75,7 @@ class Aione_Pwa_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/aione-pwa-public.css', array(), $this->version, 'all' );
+		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/aione-pwa-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -98,13 +98,16 @@ class Aione_Pwa_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/aione-pwa-public.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/aione-pwa-public.js', array( 'jquery' ), $this->version, false );
+
+		
 
 		wp_enqueue_script( 'aione-pwa-register-sw', AIONE_PWA_PATH_SRC . 'public/js/register-sw.js', array(), null, true );
 		wp_localize_script( 'aione-pwa-register-sw', 'aione_pwa_sw', array(
 				'url' => parse_url( aione_pwa_sw( 'src' ), PHP_URL_PATH ),
 			)
 		);
+		
 
 	}
 

@@ -53,6 +53,7 @@ class Aione_Pwa_Admin {
 		$this->version = $version;
 
 		add_action( 'init', array($this,'aione_pwa_add_rewrite_rules' ));
+
 		add_action( 'parse_request', array($this,'aione_pwa_generate_sw_and_manifest_on_fly' ));
 
 		add_action( 'admin_menu', array($this,'aione_pwa_add_menu_links' ));
@@ -81,7 +82,7 @@ class Aione_Pwa_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/aione-pwa-admin.css', array(), $this->version, 'all' );
+		// wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/aione-pwa-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -104,13 +105,16 @@ class Aione_Pwa_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/aione-pwa-admin.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/aione-pwa-admin.js', array( 'jquery' ), $this->version, false );
+
+		/*
 
 		wp_enqueue_script( 'aione-pwa-register-sw', AIONE_PWA_PATH_SRC . 'public/js/register-sw.js', array(), null, true );
 		wp_localize_script( 'aione-pwa-register-sw', 'aione_pwa_sw', array(
 				'url' => parse_url( aione_pwa_sw( 'src' ), PHP_URL_PATH ),
 			)
 		);
+		*/
 
 		wp_enqueue_style( 'wp-color-picker' );
 	    wp_enqueue_script( 'wp-color-picker' );
@@ -165,12 +169,10 @@ class Aione_Pwa_Admin {
 		}
 	}
 
-	function aione_pwa_add_menu_links() {	
-		// Main menu page
-		add_menu_page( __( 'Aione Progressive Web Apps', 'aione-pwa' ), __( 'AionePWA', 'aione-pwa' ), 'manage_options', 'aione-pwa','aione_pwa_admin_interface_render', AIONE_PWA_PATH_SRC. 'admin/img/aione-pwa-menu-icon.png', 100 );
-		
-		// Settings page - Same as main menu page
-		add_submenu_page( 'aione-pwa', __( 'Aione Progressive Web Apps', 'aione-pwa' ), __( 'Settings', 'aione-pwa' ), 'manage_options', 'aione-pwa', array($this,'aione_pwa_admin_interface_render') , 60);
+	function aione_pwa_add_menu_links() {			
+		$page = array();
+		$hook = add_submenu_page( 'aione-dashboard', __( 'Aione Progressive Web Apps', 'aione-pwa' ), __( 'Aione PWA', 'aione-pwa' ), 'manage_options', 'aione-pwa', array($this,'aione_pwa_admin_interface_render') , 60);
+		add_action( 'load-' . $hook, $page );
 		
 	}
 
@@ -193,7 +195,7 @@ class Aione_Pwa_Admin {
 		?>
 		
 		<div class="wrap">	
-			<h1>Aione Progressive Web Apps <sup><?php echo AIONE_PWA_VERSION; ?></sup></h1>
+			<h1>Aione Progressive Web Apps</h1>
 			
 			<form action="options.php" method="post" enctype="multipart/form-data">		
 				<?php

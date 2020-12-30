@@ -29,3 +29,28 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+
+delete_option( 'aione_pwa_settings' );
+
+if ( is_multisite() ) {
+	
+	// Retrieve the list of blog ids where SuperPWA is active. (saved with blog_id as $key and activation_status as $value)
+	$aione_pwa_sites = get_site_option( 'aione_pwa_active_sites' );
+	
+	// Loop through each active site.
+	foreach( $aione_pwa_sites as $blog_id => $actviation_status ) {
+		
+		// Switch to each blog
+		switch_to_blog( $blog_id );
+		
+		// Delete database settings for each site.
+		delete_option( 'aione_pwa_settings' );
+		
+		// Return to main site
+		restore_current_blog();
+	}
+	
+	// Delete the list of websites where SuperPWA was activated.
+	delete_site_option( 'aione_pwa_active_sites' );
+}

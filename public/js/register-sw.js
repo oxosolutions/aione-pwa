@@ -9,7 +9,7 @@ if ('serviceWorker' in navigator) {
 	window.addEventListener('beforeinstallprompt', function(e){
 		deferredPrompt = e;
 		if(deferredPrompt != null || deferredPrompt != undefined){
-			var a2hsBanner = document.getElementsByClassName("aione_pwa_sticky-banner");
+			var a2hsBanner = document.getElementsByClassName("aione-pwa-sticky-banner");
 			if(a2hsBanner.length){
 				deferredPrompt.preventDefault();
 				for (var i = 0; i < a2hsBanner.length; i++) {
@@ -21,7 +21,7 @@ if ('serviceWorker' in navigator) {
 	})
 
 	window.addEventListener('appinstalled', function(evt){
-		var a2hsBanner = document.getElementsByClassName("aione_pwa_sticky-banner");
+		var a2hsBanner = document.getElementsByClassName("aione-pwa-sticky-banner");
 		if(a2hsBanner.length){
 			for (var i = 0; i < a2hsBanner.length; i++) {
 				var showbanner = a2hsBanner[i].getAttribute("data-show");
@@ -30,7 +30,7 @@ if ('serviceWorker' in navigator) {
 		}
 	});
 	
-	var a2hsviaClass = document.getElementsByClassName("aione_pwa_add-via-class");
+	var a2hsviaClass = document.getElementsByClassName("aione-pwa-add-via-class");
     if(a2hsviaClass !== null){
         for (var i = 0; i < a2hsviaClass.length; i++) {
           a2hsviaClass[i].addEventListener("click", addToHome); 
@@ -42,7 +42,7 @@ if ('serviceWorker' in navigator) {
 		deferredPrompt.prompt(); 
 		deferredPrompt.userChoice.then(function(choiceResult) {
 			if (choiceResult.outcome === "accepted") {
-				var a2hsBanner = document.getElementsByClassName("aione_pwa_sticky-banner");
+				var a2hsBanner = document.getElementsByClassName("aione-pwa-sticky-banner");
 				if(a2hsBanner){
 					for (var i = 0; i < a2hsBanner.length; i++) {
 						var showbanner = a2hsBanner[i].getAttribute("data-show");
