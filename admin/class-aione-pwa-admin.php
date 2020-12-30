@@ -59,6 +59,8 @@ class Aione_Pwa_Admin {
 		add_action( 'admin_menu', array($this,'aione_pwa_add_menu_links' ));
 		add_action( 'admin_init', array($this,'aione_pwa_register_settings' ));
 
+		
+
 
 	}
 	
@@ -271,14 +273,14 @@ class Aione_Pwa_Admin {
 			);
 			
 			// Splash Screen Icon
-			add_settings_field(
+			/*add_settings_field(
 				'aione_pwa_splash_icon',									// ID
 				__('Splash Screen Icon', 'aione-pwa'),	// Title
 				array($this,'aione_pwa_splash_icon_cb'),								// Callback function
 				'aione_pwa_basic_settings_section',						// Page slug
 				'aione_pwa_basic_settings_section'						// Settings Section ID
 			);
-			
+			*/
 			// Splash Screen Background Color
 			add_settings_field(
 				'aione_pwa_background_color',							// ID
@@ -406,7 +408,7 @@ class Aione_Pwa_Admin {
 		$settings['icon'] = sanitize_text_field( $settings['icon'] ) == '' ? aione_pwa_httpsify( AIONE_DIR_URL . 'public/images/logo.png' ) : sanitize_text_field( aione_pwa_httpsify( $settings['icon'] ) );
 		
 		// Sanitize splash screen icon
-		$settings['splash_icon'] = sanitize_text_field( aione_pwa_httpsify( $settings['splash_icon'] ) );
+		//$settings['splash_icon'] = sanitize_text_field( aione_pwa_httpsify( $settings['splash_icon'] ) );
 		
 		/**
 		 * Get current settings already saved in the database.
@@ -424,6 +426,10 @@ class Aione_Pwa_Admin {
 		if ( ! isset( $settings['is_static_manifest'] ) ) {
 			$settings['is_static_manifest'] = $current_settings['is_static_manifest'];
 		}
+
+		if ( ! isset( $settings['is_static_assertlinks'] ) ) {
+			$settings['is_static_assertlinks'] = $current_settings['is_static_assertlinks'];
+		}
 		
 		return $settings;
 	}
@@ -434,7 +440,7 @@ class Aione_Pwa_Admin {
 					'app_short_name'	=> substr( get_bloginfo( 'name' ), 0, 15 ),
 					'description'		=> get_bloginfo( 'description' ),
 					'icon'				=> AIONE_PWA_PATH_SRC . 'public/images/logo.png',
-					'splash_icon'		=> AIONE_PWA_PATH_SRC . 'public/images/logo-512x512.png',
+					//'splash_icon'		=> AIONE_PWA_PATH_SRC . 'public/images/logo-512x512.png',
 					'background_color' 	=> '#D5E0EB',
 					'theme_color' 		=> '#D5E0EB',
 					'start_url' 		=> 0,
@@ -444,6 +450,7 @@ class Aione_Pwa_Admin {
 					'display'			=> 1,
 					'is_static_manifest'=> 0,
 					'is_static_sw'		=> 0,
+					'is_static_assertlinks'		=> 0,
 				);
 
 		$settings = get_option( 'aione_pwa_settings', $defaults );
@@ -505,12 +512,12 @@ class Aione_Pwa_Admin {
 		</button>
 		
 		<p class="description">
-			<?php _e('This will be the icon of your app when installed on the phone. Must be a <code>PNG</code> image exactly <code>192x192</code> in size.', 'aione-pwa'); ?>
+			<?php _e('This will be the icon of your app when installed on the phone. Must be a <code>PNG</code> image exactly <code>512x512</code> in size.', 'aione-pwa'); ?>
 		</p>
 
 		<?php
 	}
-	function aione_pwa_splash_icon_cb() {
+	/*function aione_pwa_splash_icon_cb() {
 		// Get Settings
 		$settings = $this->aione_pwa_get_settings(); ?>
 		
@@ -525,7 +532,7 @@ class Aione_Pwa_Admin {
 		</p>
 
 		<?php
-	}
+	}*/
 	function aione_pwa_background_color_cb() {
 		// Get Settings
 		$settings = $this->aione_pwa_get_settings(); ?>

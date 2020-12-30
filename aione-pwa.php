@@ -23,6 +23,8 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       aione-pwa
  * Domain Path:       /languages
+  * GitHub Plugin URI: https://github.com/oxosolutions/aione-pwa
+ * GitHub Branch: master
  */
 
 // If this file is called directly, abort.

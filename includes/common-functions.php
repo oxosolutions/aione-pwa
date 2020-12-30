@@ -206,7 +206,7 @@ function aione_pwa_get_settings() {
 				'app_short_name'	=> substr( get_bloginfo( 'name' ), 0, 15 ),
 				'description'		=> get_bloginfo( 'description' ),
 				'icon'				=> AIONE_PWA_PATH_SRC . 'public/images/logo.png',
-				'splash_icon'		=> AIONE_PWA_PATH_SRC . 'public/images/logo-512x512.png',
+				//'splash_icon'		=> AIONE_PWA_PATH_SRC . 'public/images/logo-512x512.png',
 				'background_color' 	=> '#D5E0EB',
 				'theme_color' 		=> '#D5E0EB',
 				'start_url' 		=> 0,
@@ -216,6 +216,7 @@ function aione_pwa_get_settings() {
 				'display'			=> 1,
 				'is_static_manifest'=> 0,
 				'is_static_sw'		=> 0,
+				'is_static_assertlinks'		=> 0,
 			);
 
 	$settings = get_option( 'aione_pwa_settings', $defaults );

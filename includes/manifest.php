@@ -109,24 +109,68 @@ function aione_pwa_delete_manifest() {
 function aione_pwa_get_pwa_icons() {	
 	// Get settings
 	$settings = aione_pwa_get_settings();
+	$icon_sizes = array('16','32','72','96','128','144','152','192','384','512');
+
+	if($settings["icon"] != ''){
+		/** create Images folder **/
+		$upload = wp_upload_dir();			
+	    $upload_dir = $upload['basedir'];
+	    $upload_url = $upload['baseurl'];
+	    
+	    if ( is_multisite() ) { 
+	    	$blog_id = get_current_blog_id();
+	    	$upload_dir = $upload_dir.'/sites/'.$blog_id;		
+	    	$upload_url = $upload_url.'/sites/'.$blog_id;		
+	    }
+		
+		$target_dir = $upload_dir."/pwa/icons";
+		$target_url = $upload_url."/pwa/icons";
+		if (!is_dir($target_dir)) {
+			mkdir($target_dir, 0755, true);
+		}
+		/** Move uploaded Image **/
+		$filename = basename( $settings["icon"]);
+		$target_file = $target_dir."/" . $filename;
+		$contents= file_get_contents($settings["icon"]);
+		$savefile = fopen($target_file, 'w');
+		fwrite($savefile, $contents);
+		fclose($savefile);
+
+
+		/** create Different Sizes icons **/
+		foreach ($icon_sizes as $value) {
+			$image = wp_get_image_editor( $target_file );			
+			if ( ! is_wp_error( $image ) ) {
+				$temp = array();
+				$temp['src'] = $target_url."/" . $filename."-".$value."x".$value.".png";
+				$temp['sizes'] = $value."x".$value;
+				$temp['type'] = "image/png";
+				//array_push($icons_array[], $temp);
+				$icons_array[] = $temp;
+
+				$image->resize( $value, $value, true );
+		    	$image->save( $target_dir.'/'.$filename.'-'.$value.'x'.$value.'.png' );
+			}			    
+		}
+	}
 	
 	// Application icon
-	$icons_array[] = array(
+	/*$icons_array[] = array(
 							'src' 	=> $settings['icon'],
 							'sizes'	=> '192x192', // must be 192x192. Todo: use getimagesize($settings['icon'])[0].'x'.getimagesize($settings['icon'])[1] in the future
 							'type'	=> 'image/png', // must be image/png. Todo: use getimagesize($settings['icon'])['mime']
 							'purpose'=> 'any maskable', // any maskable to support adaptive icons
-						);
+						);*/
 	
 	// Splash screen icon - Added since 1.3
-	if ( @$settings['splash_icon'] != '' ) {
+	/*if ( @$settings['splash_icon'] != '' ) {
 		
 		$icons_array[] = array(
 							'src' 	=> $settings['splash_icon'],
 							'sizes'	=> '512x512', // must be 512x512.
 							'type'	=> 'image/png', // must be image/png
 						);
-	}
+	}*/
 	
 	return $icons_array;
 }
